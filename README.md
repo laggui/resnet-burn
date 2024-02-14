@@ -1,6 +1,6 @@
 # ResNet + Burn ✍️
 
-This repository contains the ResNet implementation from [this tutorial](https://dev.to/laggui/transitioning-from-pytorch-to-burn-45m).
+## **👉 [Check out the full tutorial](https://dev.to/laggui/transitioning-from-pytorch-to-burn-45m) 👈**
 
 To use ResNet in your application, take a look at the official Burn implementation
 [available on GitHub](https://github.com/tracel-ai/models/tree/main/resnet-burn)! It closely follows
