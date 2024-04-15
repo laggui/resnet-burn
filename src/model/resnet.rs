@@ -3,7 +3,7 @@ use burn::{
     nn::{
         conv::{Conv2d, Conv2dConfig},
         pool::{AdaptiveAvgPool2d, AdaptiveAvgPool2dConfig, MaxPool2d, MaxPool2dConfig},
-        BatchNorm, BatchNormConfig, Linear, LinearConfig, PaddingConfig2d, ReLU,
+        BatchNorm, BatchNormConfig, Linear, LinearConfig, PaddingConfig2d, Relu,
     },
     tensor::{backend::Backend, Device, Tensor},
 };
@@ -14,7 +14,7 @@ use super::block::{BasicBlock, Bottleneck, LayerBlock, ResidualBlock};
 pub struct ResNet<B: Backend, M> {
     conv1: Conv2d<B>,
     bn1: BatchNorm<B, 2>,
-    relu: ReLU,
+    relu: Relu,
     maxpool: MaxPool2d,
     layer1: LayerBlock<B, M>,
     layer2: LayerBlock<B, M>,
@@ -33,7 +33,7 @@ impl<B: Backend, M: ResidualBlock<B>> ResNet<B, M> {
             .with_bias(false)
             .init(device);
         let bn1 = BatchNormConfig::new(64).init(device);
-        let relu = ReLU::new();
+        let relu = Relu::new();
         // 3x3 maxpool, /2
         let maxpool = MaxPool2dConfig::new([3, 3])
             .with_strides([2, 2])
