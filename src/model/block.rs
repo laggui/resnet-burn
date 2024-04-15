@@ -4,7 +4,7 @@ use burn::{
     module::Module,
     nn::{
         conv::{Conv2d, Conv2dConfig},
-        BatchNorm, BatchNormConfig, PaddingConfig2d, ReLU,
+        BatchNorm, BatchNormConfig, PaddingConfig2d, Relu,
     },
     tensor::{backend::Backend, Device, Tensor},
 };
@@ -14,7 +14,7 @@ use burn::{
 pub struct BasicBlock<B: Backend> {
     conv1: Conv2d<B>,
     bn1: BatchNorm<B, 2>,
-    relu: ReLU,
+    relu: Relu,
     conv2: Conv2d<B>,
     bn2: BatchNorm<B, 2>,
     downsample: Option<Downsample<B>>,
@@ -26,7 +26,7 @@ pub struct BasicBlock<B: Backend> {
 pub struct Bottleneck<B: Backend> {
     conv1: Conv2d<B>,
     bn1: BatchNorm<B, 2>,
-    relu: ReLU,
+    relu: Relu,
     conv2: Conv2d<B>,
     bn2: BatchNorm<B, 2>,
     conv3: Conv2d<B>,
@@ -76,7 +76,7 @@ impl<B: Backend> ResidualBlock<B> for BasicBlock<B> {
             .with_bias(false)
             .init(device);
         let bn1 = BatchNormConfig::new(out_channels).init(device);
-        let relu = ReLU::new();
+        let relu = Relu::new();
         // conv3x3
         let conv2 = Conv2dConfig::new([out_channels, out_channels], [3, 3])
             .with_stride([1, 1])
@@ -137,7 +137,7 @@ impl<B: Backend> ResidualBlock<B> for Bottleneck<B> {
             .with_bias(false)
             .init(device);
         let bn1 = BatchNormConfig::new(int_out_channels).init(device);
-        let relu = ReLU::new();
+        let relu = Relu::new();
         // conv3x3
         let conv2 = Conv2dConfig::new([int_out_channels, int_out_channels], [3, 3])
             .with_stride([stride, stride])
