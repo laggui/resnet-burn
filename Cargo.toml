@@ -4,6 +4,6 @@ version = "0.2.0"
 edition = "2021"
 
 [dependencies]
-burn = { version = "0.13.0", features = ["ndarray"] }
-burn-import = { version = "0.13.0" }
+burn = { version = "0.14.0", features = ["ndarray"] }
+burn-import = { version = "0.14.0" }
 image = { version = "0.24.9", features = ["png", "jpeg"] }

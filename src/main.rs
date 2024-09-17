@@ -4,7 +4,7 @@ use burn::{
     backend::NdArray,
     module::Module,
     record::{FullPrecisionSettings, NamedMpkFileRecorder, Recorder},
-    tensor::{backend::Backend, Data, Device, Element, Shape, Tensor},
+    tensor::{backend::Backend, Device, Element, Tensor, TensorData},
 };
 use burn_import::pytorch::{LoadArgs, PyTorchFileRecorder};
 
@@ -18,10 +18,8 @@ fn to_tensor<B: Backend, T: Element>(
     shape: [usize; 3],
     device: &Device<B>,
 ) -> Tensor<B, 3> {
-    Tensor::<B, 3>::from_data(Data::new(data, Shape::new(shape)).convert(), device)
-        // permute(2, 0, 1)
-        .swap_dims(2, 1) // [H, C, W]
-        .swap_dims(1, 0) // [C, H, W]
+    Tensor::<B, 3>::from_data(TensorData::new(data, shape).convert::<B::FloatElem>(), device)
+        .permute([2, 0, 1]) // [C, H, W]
         / 255 // normalize between [0, 1]
 }
 
